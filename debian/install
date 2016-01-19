@@ -1,0 +1,4 @@
+mincer /usr/bin
+mincer-worker /usr/bin
+mincer.conf.example /usr/share/mincer
+callback.sh.skeleton /usr/share/mincer

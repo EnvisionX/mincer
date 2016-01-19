@@ -1,0 +1,45 @@
+#!/bin/sh -e
+# -*- shell-script -*-
+
+##
+## Mincer daemon entry point
+##
+
+if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then
+    echo "\
+Usage:
+   $0 <config-file>\
+   $0 <config-file> stop" 1>&2
+    exit 1
+fi
+
+MINCER_CONFIG=`readlink --canonicalize-missing "$1"`
+. "$MINCER_CONFIG"
+
+cd "$ROOT_DIR"
+
+PIDFILE="$ROOT_DIR"/pid
+if [ "$2" = "stop" ]; then
+    pkill --pidfile "$PIDFILE" --exact inoticoming || :
+    exit 0
+fi
+
+if pgrep --pidfile "$PIDFILE" --exact inoticoming > /dev/null 2>&1; then
+    # The daemon already running.
+    exit 0
+fi
+
+[ -z "$OUTPUT_DIR" ] && OUTPUT_DIR="$ROOT_DIR"/output
+[ -z "$INCOMING_DIR" ] && INCOMING_DIR="$ROOT_DIR"/incoming
+[ -z "$FAILED_DIR" ] && FAILED_DIR="$ROOT_DIR"/failed
+[ -z "$HISTORY_DIR" ] && HISTORY_DIR="$ROOT_DIR"/history
+[ -z "$WORK_DIR" ] && WORK_DIR="$ROOT_DIR"/tmp
+
+mkdir -p "$OUTPUT_DIR" "$INCOMING_DIR" "$FAILED_DIR" \
+    "$HISTORY_DIR" "$WORK_DIR"
+
+exec inoticoming --initialsearch \
+    --logfile "$ROOT_DIR"/processing.log --pid-file "$PIDFILE" \
+    "$INCOMING_DIR" \
+    --regexp "$FILENAME_REGEXP" --stdout-to-log --stderr-to-log \
+    mincer-worker "$MINCER_CONFIG" '{}' \;

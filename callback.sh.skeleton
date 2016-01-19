@@ -1,0 +1,20 @@
+#!/bin/sh -e
+# -*- shell-script -*-
+
+##
+## Skeleton for Mincer callback script
+##
+
+if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then
+    echo "Usage: $0 <file-to-process>" 1>&2
+    exit 1
+fi
+
+## You can reach Mincer configuration file if you need.
+## Just uncomment following line:
+#. "$MINCER_CONFIG"
+
+## Write processing specific code below
+echo "processing file $1…"
+
+exit 0

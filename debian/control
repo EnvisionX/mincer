@@ -1,0 +1,16 @@
+Source: mincer
+Section: devel
+Priority: extra
+Maintainer: Aleksey Morarash <aleksey.morarash@envisionx.co>
+Build-Depends: debhelper, inoticoming, procps
+Standards-Version: 3.9.3
+Homepage: https://github.com/EnvisionX/mincer
+Vcs-Browser: https://github.com/EnvisionX/mincer
+Vcs-Git: https://github.com/EnvisionX/mincer.git
+
+Package: mincer
+Architecture: all
+Depends: inoticoming, procps
+Description: Mincer - batch processing daemon
+ Listen incoming directory for new files, process them and put
+ processing results to the output directory.

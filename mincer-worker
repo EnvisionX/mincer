@@ -1,0 +1,69 @@
+#!/bin/sh -e
+# -*- shell-script -*-
+
+##
+## Mincer worker
+##
+
+if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" -o -z "$2" ]; then
+    echo "Usage: $0 <config-file> <file-to-process>" 1>&2
+    exit 1
+fi
+
+MINCER_CONFIG=`readlink --canonicalize-missing "$1"`
+. "$MINCER_CONFIG"
+
+[ -z "$CALLBACK" ] && CALLBACK="$ROOT_DIR"/callback.sh
+[ -z "$OUTPUT_DIR" ] && OUTPUT_DIR="$ROOT_DIR"/output
+[ -z "$INCOMING_DIR" ] && INCOMING_DIR="$ROOT_DIR"/incoming
+[ -z "$FAILED_DIR" ] && FAILED_DIR="$ROOT_DIR"/failed
+[ -z "$HISTORY_DIR" ] && HISTORY_DIR="$ROOT_DIR"/history
+[ -z "$WORK_DIR" ] && WORK_DIR="$ROOT_DIR"/tmp
+
+cd "$WORK_DIR"
+for i in *; do test -f "$i" && rm -f -- "$i"; done
+
+log(){ echo `date '+%Y-%m-%d %H:%M:%S %Z'` "<worker-$$>" "$1"; }
+
+INPUT_FILE_BASENAME="$2"
+INPUT_FILE="$INCOMING_DIR"/"$INPUT_FILE_BASENAME"
+
+if [ ! -s "$INPUT_FILE" ]; then
+    log "skipping empty file $INPUT_FILE"
+    exit 0
+fi
+
+log "STARTED for $INPUT_FILE"
+
+export MINCER_CONFIG
+if "$CALLBACK" "$INPUT_FILE"; then
+    log "processed. Moving result files to $OUTPUT_DIR:"
+    for i in *; do
+        [ -f "$i" ] || continue
+        log "  $i"
+        mv -f -- "$i" "$OUTPUT_DIR"/"$i".tmp &&
+            mv -f -- "$OUTPUT_DIR"/"$i".tmp "$OUTPUT_DIR"/"$i" || \
+                {
+                    log "failed"
+                    rm -f -- "$OUTPUT_DIR"/"$i".tmp
+                    mv -f -- "$INPUT_FILE" "$FAILED_DIR"
+                    exit 1
+                }
+    done
+    ## post process
+    set +e
+    if [ "$HISTORY" = "plain" ]; then
+        mv -f -- "$INPUT_FILE" "$HISTORY_DIR"
+        log "moved to history"
+    elif [ "$HISTORY" = "gzip" ]; then
+        gzip -f > "$HISTORY_DIR"/"$INPUT_FILE_BASENAME".gz < "$INPUT_FILE"
+        log "gzipped to history"
+    fi
+    rm -f -- "$INPUT_FILE"
+else
+    log "failed"
+    mv -f -- "$INPUT_FILE" "$FAILED_DIR"
+    exit 1
+fi
+
+exit 0

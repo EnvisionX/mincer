@@ -1,0 +1,58 @@
+##
+## Mincer example configuration file
+##
+
+# -*- shell-script -*-
+
+## Important notes:
+## 1. All paths must be an absolute paths;
+## 2. All directries defined below must have write permissions
+##   for the effective user.
+
+## Mincer instance root directory. Log, pid and other essential
+## files and directories will be written to it.
+## Mandatory. No default value.
+ROOT_DIR="/path/to/mincer/instance/root/directory"
+
+## What files to process.
+## Mandatory. No default value.
+FILENAME_REGEXP='^.*\.data$'
+
+## What script to invoke for each incoming file.
+## Optional. Default is "$ROOT_DIR"/callback.sh
+#CALLBACK="$ROOT_DIR"/callback.sh
+
+## Where to move processing results.
+## Optional. Default is $ROOT_DIR/output
+#OUTPUT_DIR="$ROOT_DIR"/output
+
+## The directory which will be listened for new files.
+## Optional. Default is $ROOT_DIR/incoming
+#INCOMING_DIR="$ROOT_DIR"/incoming
+
+## Where to move files which are failed to process.
+## Optional. Default is $ROOT_DIR/failed
+#FAILED_DIR="$ROOT_DIR"/failed
+
+## Where to move successfully processed files from
+## the incoming directory.
+## See HISTORY variable description below.
+## Optional. Default is $ROOT_DIR/history
+#HISTORY_DIR="$ROOT_DIR"/history
+
+## Optional. No default.
+## If set, all successfully processed files from
+## the incoming directory will be moved to the $HISTORY_DIR.
+## Valid values are:
+##  plain - save files as is;
+##  gzip - save files gzipped.
+## If unset, processed files will be removed.
+#HISTORY="gzip"
+
+## Working directory for incoming file processing.
+## The callback script will be chdir'ed to that directory.
+## When callback exits with 0, all files residing in the
+## directory will be treated as processing results and will
+## be moved to the $OUTPUT_DIR.
+## Optional. Default is $ROOT_DIR/tmp
+#WORK_DIR="$ROOT_DIR"/tmp
