@@ -56,8 +56,13 @@ if "$CALLBACK" "$INPUT_FILE"; then
         mv -f -- "$INPUT_FILE" "$HISTORY_DIR"
         log "moved to history"
     elif [ "$HISTORY" = "gzip" ]; then
-        gzip -f > "$HISTORY_DIR"/"$INPUT_FILE_BASENAME".gz < "$INPUT_FILE"
-        log "gzipped to history"
+        if echo "$INPUT_FILE_BASENAME" | grep -qE '\.gz$'; then
+            mv -f -- "$INPUT_FILE" "$HISTORY_DIR"
+            log "already gzipped. moved to history"
+        else
+            gzip -f > "$HISTORY_DIR"/"$INPUT_FILE_BASENAME".gz < "$INPUT_FILE"
+            log "gzipped to history"
+        fi
     fi
     rm -f -- "$INPUT_FILE"
 else

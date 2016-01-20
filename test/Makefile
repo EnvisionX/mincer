@@ -35,6 +35,13 @@ all: clean $(MINCER_CONF)
 	test -f "$(HISTORY)/c.data.gz"
 	test `zcat "$(HISTORY)/c.data.gz"` = "good"
 	test -f "$(OUTPUT)/c.data.result"
+# Re-inject already gzipped file
+	rm -f "$(OUTPUT)/c.data.result"
+	mv "$(HISTORY)/c.data.gz" "$(INCOMING)"
+	sleep 0.5s
+	test -f "$(HISTORY)/c.data.gz"
+	test `zcat "$(HISTORY)/c.data.gz"` = "good"
+	test -f "$(OUTPUT)/c.data.gz.result"
 # Inject file with bad filename
 	echo "good" > "$(INCOMING)/badfilename.datum"
 	sleep 1s

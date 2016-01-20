@@ -1,4 +1,4 @@
 ROOT_DIR="@@ROOTDIR@@"
-FILENAME_REGEXP='^.*\.data$'
+FILENAME_REGEXP='^.*\.data(\.gz)?$'
 CALLBACK="$ROOT_DIR"/../callback.sh
 HISTORY="gzip"

@@ -45,7 +45,9 @@ FILENAME_REGEXP='^.*\.data$'
 ## the incoming directory will be moved to the $HISTORY_DIR.
 ## Valid values are:
 ##  plain - save files as is;
-##  gzip - save files gzipped.
+##  gzip - save files gzipped. If input filename is suffixed
+##    with '.gz', no compression is performed and file just
+##    moved to the history directory as is.
 ## If unset, processed files will be removed.
 #HISTORY="gzip"
 
