@@ -1,3 +1,9 @@
+mincer (0.2.0) unstable; urgency=low
+
+  * do not gzip history files twice
+
+ -- Aleksey Morarash <aleksey.morarash@envisionx.co>  Wed, 20 Jan 2016 18:30:14 +0200
+
 mincer (0.1.1) unstable; urgency=low
 
   * Initial release.
