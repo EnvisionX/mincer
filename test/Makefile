@@ -80,5 +80,5 @@ $(MINCER_CONF):
 	sed 's#@@ROOTDIR@@#$(ROOTDIR)#' $@.in > $@
 
 clean:
-	$(MINCER) $(MINCER_CONF) stop || :
-	rm -rf -- $(ROOTDIR) $(MINCER_CONF)
+	"$(MINCER)" "$(MINCER_CONF)" stop || :
+	rm -rf -- "$(ROOTDIR)" "$(MINCER_CONF)"
