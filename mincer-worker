@@ -30,6 +30,7 @@ INPUT_FILE="$INCOMING_DIR"/"$INPUT_FILE_BASENAME"
 
 if [ ! -s "$INPUT_FILE" ]; then
     log "skipping empty file $INPUT_FILE"
+    rm -f -- "$INPUT_FILE"
     exit 0
 fi
 

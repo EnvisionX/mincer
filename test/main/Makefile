@@ -73,6 +73,13 @@ all: clean $(MINCER_CONF)
 	test ! -f "$(HISTORY)/d.data.gz"
 	test ! -f "$(OUTPUT)/d.data.result"
 	test -f "$(FAILED)/d.data"
+# Inject empty file
+	touch "$(INCOMING)/e.data"
+	sleep 0.5s
+	test ! -f "$(INCOMING)/e.data"
+	test ! -f "$(HISTORY)/e.data.gz"
+	test ! -f "$(OUTPUT)/e.data.result"
+	test ! -f "$(FAILED)/e.data"
 # Stop the daemon
 	"$(MINCER)" "$(MINCER_CONF)" stop
 
