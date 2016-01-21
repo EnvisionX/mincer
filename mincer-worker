@@ -20,6 +20,7 @@ MINCER_CONFIG=`readlink --canonicalize-missing "$1"`
 [ -z "$HISTORY_DIR" ] && HISTORY_DIR="$ROOT_DIR"/history
 [ -z "$WORK_DIR" ] && WORK_DIR="$ROOT_DIR"/tmp
 
+mkdir -p -- "$WORK_DIR"
 cd "$WORK_DIR"
 for i in *; do test -f "$i" && rm -f -- "$i"; done
 
@@ -38,6 +39,7 @@ log "STARTED for $INPUT_FILE"
 
 if [ ! -r "$INPUT_FILE" ]; then
     log "file is not readable"
+    mkdir -p -- "$FAILED_DIR"
     mv -f -- "$INPUT_FILE" "$FAILED_DIR"
     exit 1
 fi
@@ -53,7 +55,7 @@ if "$CALLBACK" "$INPUT_FILE"; then
         for i in *; do
             [ -f "$i" ] || continue
             log "  $i"
-            mkdir -p "$DIR" && cp -f -- "$i" "$DIR"/"$i".tmp || \
+            mkdir -p -- "$DIR" && cp -f -- "$i" "$DIR"/"$i".tmp || \
                 {
                     # Remove all created tmp files
                     for DIR in "$OUTPUT_DIR" "$OUTPUT_DIR1" \
@@ -64,6 +66,7 @@ if "$CALLBACK" "$INPUT_FILE"; then
                             rm -f -- "$DIR"/"$i".tmp || :
                         done
                     done
+                    mkdir -p -- "$FAILED_DIR"
                     mv -f -- "$INPUT_FILE" "$FAILED_DIR"
                     exit 1
                 }
@@ -81,9 +84,11 @@ if "$CALLBACK" "$INPUT_FILE"; then
     ## post process
     set +e
     if [ "$HISTORY" = "plain" ]; then
+        mkdir -p -- "$HISTORY_DIR"
         mv -f -- "$INPUT_FILE" "$HISTORY_DIR"
         log "moved to history"
     elif [ "$HISTORY" = "gzip" ]; then
+        mkdir -p -- "$HISTORY_DIR"
         if echo "$INPUT_FILE_BASENAME" | grep -qE '\.gz$'; then
             mv -f -- "$INPUT_FILE" "$HISTORY_DIR"
             log "already gzipped. moved to history"
@@ -95,6 +100,7 @@ if "$CALLBACK" "$INPUT_FILE"; then
     rm -f -- "$INPUT_FILE"
 else
     log "failed"
+    mkdir -p -- "$FAILED_DIR"
     mv -f -- "$INPUT_FILE" "$FAILED_DIR"
     exit 1
 fi

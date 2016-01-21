@@ -54,7 +54,7 @@ Now you can:
 * during moving processing results to output directory (or directories)
  mincer moves files in two stages: first it copies them to $NAME.tmp, then
  renames $NAME.tmp to $NAME. This allow to deliver all or nothing;
-* write your filename regexp in such way to honor special meaning of
+* write your FILENAME_REGEXP in such way to honor special meaning of
  '.tmp' extension, otherwise mincer will start processing files earlier
  than it should. It means you never use regexps like '.*' or '\.tmp$'.
 * callback script is always started in configured WORK_DIR. All files
@@ -67,4 +67,13 @@ Now you can:
 * empty incoming files are not processed and are immediately removed
  and callback is not started;
 * incoming files without read permissions are immediately moved to
- the FAILED_DIR and callback is not started.
+ the FAILED_DIR and callback is not started;
+* all configuration options except ROOT_DIR, FILENAME_REGEXP and
+ INCOMING_DIR can be safely changed in runtime without any additional
+ efforts;
+* if you want to change ROOT_DIR/FILENAME_REGEXP/INCOMING_DIR, you must
+ stop running mincer instance first, then change the variables and then
+ start mincer again.
+
+Examine ``mincer.conf.example`` for further information about available
+configuration options.
