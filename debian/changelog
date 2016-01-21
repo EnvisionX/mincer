@@ -1,3 +1,10 @@
+mincer (0.3.2) unstable; urgency=low
+
+  * bypass unreadable input files
+  * auto remove empty input files
+
+ -- Aleksey Morarash <aleksey.morarash@envisionx.co>  Thu, 21 Jan 2016 19:01:18 +0200
+
 mincer (0.3.1) unstable; urgency=low
 
   * hide some rare errors while reading pidfile
