@@ -13,10 +13,29 @@ HISTORY = $(ROOTDIR)/history
 FAILED = $(ROOTDIR)/failed
 
 all: clean $(MINCER_CONF)
-	mkdir -p $(ROOTDIR)
+	mkdir -p "$(ROOTDIR)"
+# Feed incoming dir with some initial data
+	mkdir -p "$(INCOMING)"
+	echo "good" > "$(INCOMING)/1.data"
+	echo "good" > "$(INCOMING)/2.data"
+	echo "bad" > "$(INCOMING)/3.data"
+	echo "good" > "$(INCOMING)/4badname"
 # Start the daemon
-	$(MINCER) $(MINCER_CONF)
-	sleep 0.5s
+	"$(MINCER)" "$(MINCER_CONF)"
+	sleep 1s
+# Check if the initial files were processed
+	test -f "$(HISTORY)/1.data.gz"
+	test `zcat "$(HISTORY)/1.data.gz"` = "good"
+	test -f "$(OUTPUT)/1.data.result"
+	test -f "$(HISTORY)/2.data.gz"
+	test `zcat "$(HISTORY)/2.data.gz"` = "good"
+	test -f "$(OUTPUT)/2.data.result"
+	test ! -f "$(HISTORY)/3.data.gz"
+	test ! -f "$(OUTPUT)/3.data.result"
+	test `cat "$(FAILED)/3.data"` = "bad"
+	test -f "$(INCOMING)/4badname"
+	test ! -f "$(HISTORY)/4badname"
+	test ! -f "$(OUTPUT)/4badname.result"
 # Inject good file
 	echo "good" > "$(INCOMING)/a.data"
 	sleep 0.5s
@@ -55,7 +74,7 @@ all: clean $(MINCER_CONF)
 	test ! -f "$(OUTPUT)/d.data.result"
 	test -f "$(FAILED)/d.data"
 # Stop the daemon
-	$(MINCER) $(MINCER_CONF) stop
+	"$(MINCER)" "$(MINCER_CONF)" stop
 
 $(MINCER_CONF):
 	sed 's#@@ROOTDIR@@#$(ROOTDIR)#' $@.in > $@
