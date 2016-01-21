@@ -80,6 +80,15 @@ all: clean $(MINCER_CONF)
 	test ! -f "$(HISTORY)/e.data.gz"
 	test ! -f "$(OUTPUT)/e.data.result"
 	test ! -f "$(FAILED)/e.data"
+# Inject file without read permissions
+	echo "good" > "$(INCOMING)/f.data.tmp"
+	chmod 0000 "$(INCOMING)/f.data.tmp"
+	mv -- "$(INCOMING)/f.data.tmp" "$(INCOMING)/f.data"
+	sleep 0.5s
+	test ! -f "$(INCOMING)/f.data"
+	test ! -f "$(HISTORY)/f.data.gz"
+	test ! -f "$(OUTPUT)/f.data.result"
+	test -f "$(FAILED)/f.data"
 # Stop the daemon
 	"$(MINCER)" "$(MINCER_CONF)" stop
 
