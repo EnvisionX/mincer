@@ -35,14 +35,14 @@ if [ ! -s "$INPUT_FILE" ]; then
     exit 0
 fi
 
-log "STARTED for $INPUT_FILE"
-
 if [ ! -r "$INPUT_FILE" ]; then
     log "file is not readable"
     mkdir -p -- "$FAILED_DIR"
     mv -f -- "$INPUT_FILE" "$FAILED_DIR"
     exit 1
 fi
+
+log "STARTING: $CALLBACK $INPUT_FILE"
 
 export MINCER_CONFIG
 if "$CALLBACK" "$INPUT_FILE"; then
