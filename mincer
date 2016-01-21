@@ -20,7 +20,7 @@ cd "$ROOT_DIR"
 
 PIDFILE="$ROOT_DIR"/pid
 if [ "$2" = "stop" ]; then
-    pkill --pidfile "$PIDFILE" --exact inoticoming || :
+    pkill --pidfile "$PIDFILE" --exact inoticoming > /dev/null 2>&1 || :
     exit 0
 fi
 
