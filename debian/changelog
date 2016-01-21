@@ -1,3 +1,12 @@
+mincer (0.3.0) unstable; urgency=low
+
+  * allow to define more than one output directories
+  * unit test: clear space for another tests
+  * unit test minor fix
+  * unit test: check initial data are processed
+
+ -- Aleksey Morarash <aleksey.morarash@envisionx.co>  Thu, 21 Jan 2016 13:19:26 +0200
+
 mincer (0.2.0) unstable; urgency=low
 
   * do not gzip history files twice
