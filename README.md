@@ -45,3 +45,26 @@ Now you can:
 * add your data files to the ``/var/mincer1/incoming`` directory;
 * examine what is going on in the ``/var/mincer1/processing.log``;
 * stop the daemon with ``mincer /var/mincer1/mincer.conf stop``.
+
+## Things you should know
+
+* files are processed one-by-one;
+* when incoming queue is empty, file processing begins immediately after
+ write close;
+* during moving processing results to output directory (or directories)
+ mincer moves files in two stages: first it copies them to $NAME.tmp, then
+ renames $NAME.tmp to $NAME. This allow to deliver all or nothing;
+* write your filename regexp in such way to honor special meaning of
+ '.tmp' extension, otherwise mincer will start processing files earlier
+ than it should. It means you never use regexps like '.*' or '\.tmp$'.
+* callback script is always started in configured WORK_DIR. All files
+ in WORK_DIR are removed before callback start, but directories are not.
+ So you can save some state between callback invocation;
+* callback script always invoked with the one argument - absolute path
+ of the incoming file;
+* callback script should never move, change or remove incoming file
+ because it will break mincer processing logic;
+* empty incoming files are not processed and are immediately removed
+ and callback is not started;
+* incoming files without read permissions are immediately moved to
+ the FAILED_DIR and callback is not started.
