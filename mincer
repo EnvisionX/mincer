@@ -31,9 +31,10 @@ fi
 
 [ -z "$INCOMING_DIR" ] && INCOMING_DIR="$ROOT_DIR"/incoming
 mkdir -p "$INCOMING_DIR"
+[ -z "$LOGFILE" ] && LOGFILE="$ROOT_DIR"/processing.log
 
 exec inoticoming --initialsearch \
-    --logfile "$ROOT_DIR"/processing.log --pid-file "$PIDFILE" \
+    --logfile "$LOGFILE" --pid-file "$PIDFILE" \
     "$INCOMING_DIR" \
     --regexp "$FILENAME_REGEXP" --stdout-to-log --stderr-to-log \
     mincer-worker "$MINCER_CONFIG" '{}' \;

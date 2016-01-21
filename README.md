@@ -68,12 +68,12 @@ Now you can:
  and callback is not started;
 * incoming files without read permissions are immediately moved to
  the FAILED_DIR and callback is not started;
-* all configuration options except ROOT_DIR, FILENAME_REGEXP and
+* all configuration options except ROOT_DIR, FILENAME_REGEXP, LOGFILE and
  INCOMING_DIR can be safely changed in runtime without any additional
  efforts;
-* if you want to change ROOT_DIR/FILENAME_REGEXP/INCOMING_DIR, you must
- stop running mincer instance first, then change the variables and then
- start mincer again.
+* if you want to change ROOT_DIR/FILENAME_REGEXP/LOGFILE/INCOMING_DIR,
+ you must stop running mincer instance first, then change the variables
+ and then start mincer again.
 
 Examine ``mincer.conf.example`` for further information about available
 configuration options.
