@@ -37,18 +37,39 @@ log "STARTED for $INPUT_FILE"
 
 export MINCER_CONFIG
 if "$CALLBACK" "$INPUT_FILE"; then
-    log "processed. Moving result files to $OUTPUT_DIR:"
-    for i in *; do
-        [ -f "$i" ] || continue
-        log "  $i"
-        mv -f -- "$i" "$OUTPUT_DIR"/"$i".tmp &&
-            mv -f -- "$OUTPUT_DIR"/"$i".tmp "$OUTPUT_DIR"/"$i" || \
+    log "processed"
+    # Copy result files as .tmp files in all output dirs
+    for DIR in "$OUTPUT_DIR" "$OUTPUT_DIR1" \
+               "$OUTPUT_DIR2" "$OUTPUT_DIR3"; do
+        [ -z "$DIR" ] && continue
+        log "copying to $DIR:"
+        for i in *; do
+            [ -f "$i" ] || continue
+            log "  $i"
+            mkdir -p "$DIR" && cp -f -- "$i" "$DIR"/"$i".tmp || \
                 {
-                    log "failed"
-                    rm -f -- "$OUTPUT_DIR"/"$i".tmp
+                    # Remove all created tmp files
+                    for DIR in "$OUTPUT_DIR" "$OUTPUT_DIR1" \
+                               "$OUTPUT_DIR2" "$OUTPUT_DIR3"; do
+                        [ -z "$DIR" ] && continue
+                        for i in *; do
+                            [ -f "$i" ] || continue
+                            rm -f -- "$DIR"/"$i".tmp || :
+                        done
+                    done
                     mv -f -- "$INPUT_FILE" "$FAILED_DIR"
                     exit 1
                 }
+        done
+    done
+    # Rename all copied tmp files to origin names
+    for DIR in "$OUTPUT_DIR" "$OUTPUT_DIR1" \
+               "$OUTPUT_DIR2" "$OUTPUT_DIR3"; do
+        [ -z "$DIR" ] && continue
+        for i in *; do
+            [ -f "$i" ] || continue
+            mv -f -- "$DIR"/"$i".tmp "$DIR"/"$i"
+        done
     done
     ## post process
     set +e

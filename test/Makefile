@@ -1,4 +1,4 @@
-TESTS = main
+TESTS = main multi_output
 
 .PHONY: all clean $(TESTS)
 

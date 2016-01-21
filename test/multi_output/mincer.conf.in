@@ -1,0 +1,5 @@
+ROOT_DIR="@@ROOTDIR@@"
+FILENAME_REGEXP='^.*$'
+CALLBACK="$ROOT_DIR"/../callback.sh
+OUTPUT_DIR2="$ROOT_DIR"/output2
+OUTPUT_DIR3="$ROOT_DIR"/output3

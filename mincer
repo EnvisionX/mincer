@@ -35,8 +35,7 @@ fi
 [ -z "$HISTORY_DIR" ] && HISTORY_DIR="$ROOT_DIR"/history
 [ -z "$WORK_DIR" ] && WORK_DIR="$ROOT_DIR"/tmp
 
-mkdir -p "$OUTPUT_DIR" "$INCOMING_DIR" "$FAILED_DIR" \
-    "$HISTORY_DIR" "$WORK_DIR"
+mkdir -p "$INCOMING_DIR" "$FAILED_DIR" "$HISTORY_DIR" "$WORK_DIR"
 
 exec inoticoming --initialsearch \
     --logfile "$ROOT_DIR"/processing.log --pid-file "$PIDFILE" \
