@@ -1,3 +1,10 @@
+mincer (0.4.2) unstable; urgency=low
+
+  * upgrade readme
+  * do not set default value for OUTPUT_DIR
+
+ -- Aleksey Morarash <aleksey.morarash@envisionx.co>  Mon, 25 Jan 2016 18:52:18 +0200
+
 mincer (0.4.0) unstable; urgency=low
 
   * make logfile location configurable
