@@ -23,8 +23,7 @@ all: clean $(MINCER_CONF)
 	echo "good" > "$(INCOMING)/a"
 	sleep 0.5s
 	test ! -f "$(INCOMING)/a"
-	test -f "$(OUTPUT0)/a.res"
-	test `cat "$(OUTPUT0)/a.res"` = "ok"
+	test ! -f "$(OUTPUT0)/a.res"
 	test ! -f "$(OUTPUT1)/a.res"
 	test -f "$(OUTPUT2)/a.res"
 	test `cat "$(OUTPUT2)/a.res"` = "ok"
