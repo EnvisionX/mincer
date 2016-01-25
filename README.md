@@ -26,7 +26,7 @@ a few scripts which can be used to build your own daemons.
 
 ## Daemon creation mini-howto
 
-1. Create a root directory for your Mincer instance, say /var/mincer1;
+1. Create a root directory for your Mincer instance, say ``/var/mincer1``;
 2. Create a callback script ``callback.sh`` inside the root directory.
  Take a ``callback.sh.skeleton`` as a start point. It must take an absolute
  file name of incoming data file as first argument. It must create result
@@ -34,7 +34,7 @@ a few scripts which can be used to build your own daemons.
  overrided. See examples);
 3. Create your own Mincer configuration file based on
  mincer.conf.example, provided inside the upstream tarball.
- You have to define at least ROOT_DIR and FILENAME_REGEXP variables.
+ You have to define at least ``ROOT_DIR`` and ``FILENAME_REGEXP`` variables.
  Save the created file as ``/var/mincer1/mincer.conf``;
 4. Start the Mincer daemon with ``mincer /var/mincer1/mincer.conf``. Note
  only the very first command will start the daemon and all subsequent
@@ -54,11 +54,11 @@ Now you can:
 * during moving processing results to output directory (or directories)
  mincer moves files in two stages: first it copies them to $NAME.tmp, then
  renames $NAME.tmp to $NAME. This allow to deliver all or nothing;
-* write your FILENAME_REGEXP in such way to honor special meaning of
+* write your ``FILENAME_REGEXP`` in such way to honor special meaning of
  '.tmp' extension, otherwise mincer will start processing files earlier
  than it should. It means you never use regexps like '.*' or '\.tmp$'.
-* callback script is always started in configured WORK_DIR. All files
- in WORK_DIR are removed before callback start, but directories are not.
+* callback script is always started in configured ``WORK_DIR``. All files
+ in ``WORK_DIR`` are removed before callback start, but directories are not.
  So you can save some state between callback invocation;
 * callback script always invoked with the one argument - absolute path
  of the incoming file;
@@ -67,13 +67,16 @@ Now you can:
 * empty incoming files are not processed and are immediately removed
  and callback is not started;
 * incoming files without read permissions are immediately moved to
- the FAILED_DIR and callback is not started;
-* all configuration options except ROOT_DIR, FILENAME_REGEXP, LOGFILE and
- INCOMING_DIR can be safely changed in runtime without any additional
- efforts;
-* if you want to change ROOT_DIR/FILENAME_REGEXP/LOGFILE/INCOMING_DIR,
- you must stop running mincer instance first, then change the variables
- and then start mincer again.
+ the ``FAILED_DIR`` and callback is not started;
+* all configuration options except ``ROOT_DIR``, ``FILENAME_REGEXP``,
+ ``LOGFILE`` and ``INCOMING_DIR`` can be safely changed in runtime without
+ any additional efforts;
+* if you want to change one of ``ROOT_DIR``, ``FILENAME_REGEXP``, ``LOGFILE``,
+ ``INCOMING_DIR``, you must stop running mincer instance first, then change
+ the variables and then start mincer again;
+* symlinks are NOT processed. If you want to process files located
+ somewhere in the filesystem, use hardlinks or tiny files with target
+ file path.
 
 Examine ``mincer.conf.example`` for further information about available
 configuration options.
