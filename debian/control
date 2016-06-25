@@ -4,9 +4,9 @@ Priority: extra
 Maintainer: Aleksey Morarash <aleksey.morarash@envisionx.co>
 Build-Depends: debhelper, inoticoming, procps
 Standards-Version: 3.9.3
-Homepage: https://github.com/EnvisionX/mincer
-Vcs-Browser: https://github.com/EnvisionX/mincer
-Vcs-Git: https://github.com/EnvisionX/mincer.git
+Homepage: https://github.com/ENVISIONX/mincer
+Vcs-Browser: https://github.com/ENVISIONX/mincer
+Vcs-Git: https://github.com/ENVISIONX/mincer.git
 
 Package: mincer
 Architecture: all
