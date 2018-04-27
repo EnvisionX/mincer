@@ -5,8 +5,6 @@ Maintainer: Aleksey Morarash <aleksey.morarash@envisionx.co>
 Build-Depends: debhelper, inoticoming, procps
 Standards-Version: 4.1.4
 Homepage: https://github.com/EnvisionX/mincer
-Vcs-Browser: https://github.com/EnvisionX/mincer
-Vcs-Git: https://github.com/EnvisionX/mincer.git
 
 Package: mincer
 Architecture: all
