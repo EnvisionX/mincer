@@ -1,3 +1,13 @@
+mincer (0.4.3) unstable; urgency=low
+
+  * Fix copyright year
+  * Specs: remove Vcs-Browser and Vcs-Git links
+  * Fix company name
+  * Upgrade Debian Policy version references
+  * fix company name
+
+ -- Aleksey Morarash <aleksey.morarash@envisionx.co>  Sat, 28 Apr 2018 14:05:23 +0300
+
 mincer (0.4.2) unstable; urgency=low
 
   * upgrade readme
