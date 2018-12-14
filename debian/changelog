@@ -1,3 +1,11 @@
+mincer (0.4.5) unstable; urgency=low
+
+  * Add not for logs rotation
+  * Fix and extend docs
+  * Add missing newline in usage help
+
+ -- Aleksey Morarash <aleksey.morarash@envisionx.co>  Fri, 14 Dec 2018 11:52:00 +0200
+
 mincer (0.4.4) unstable; urgency=low
 
   * Gitignore vim temporary files
