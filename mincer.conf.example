@@ -73,4 +73,7 @@ FILENAME_REGEXP='^.*\.data$'
 
 ## Mincer log file location.
 ## Optional. Default is "$ROOT_DIR"/processing.log
+## Log rotation note. Since inoticoming ignores any signals
+## and mincer itself doesn't implement logs rotation,
+## you should use copytruncate option for logrotate daemon.
 #LOGFILE="$ROOT_DIR"/processing.log
