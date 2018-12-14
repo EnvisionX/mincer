@@ -8,7 +8,7 @@
 if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then
     echo "\
 Usage:
-   $0 <config-file>\
+   $0 <config-file>
    $0 <config-file> stop" 1>&2
     exit 1
 fi
