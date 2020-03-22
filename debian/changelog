@@ -1,3 +1,9 @@
+mincer (0.5.0) unstable; urgency=low
+
+  * rebuild with new versions of libs.
+
+ -- Oleksii Klitovchenko <oleksii.klitovchenko@envisionx.co>  Sun, 22 Mar 2020 10:00:41 +0200
+
 mincer (0.4.5) unstable; urgency=low
 
   * Add not for logs rotation
